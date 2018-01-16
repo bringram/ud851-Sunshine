@@ -112,6 +112,23 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
         new FetchWeatherTask().execute(location);
     }
 
+    private void showMap() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        String address = "570 Polaris Parkway, Westerville, OH";
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("geo")
+                .path("0,0")
+                .query(address);
+        Uri addressUri = builder.build();
+
+        intent.setData(addressUri);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
     /**
      * This method is overridden by our MainActivity class in order to handle RecyclerView item
      * clicks.
@@ -221,7 +238,11 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             return true;
         }
 
-        // TODO (2) Launch the map when the map menu item is clicked
+        // COMPLETE (2) Launch the map when the map menu item is clicked
+        if (id == R.id.action_map) {
+            showMap();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
